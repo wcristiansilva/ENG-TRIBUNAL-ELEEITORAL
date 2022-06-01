@@ -1,14 +1,14 @@
 public class Candidato {
     private int numero;
     private String nome;
-    private Cargo cargo;
     private Partido partido;
+    private Cargo cargo;
 
-    public Candidato(int numero, String nome, Cargo cargo, Partido partido) {
+    public Candidato(int numero, String nome, Partido partido, Cargo cargo) {
         this.numero = numero;
         this.nome = nome;
-        this.cargo = cargo;
         this.partido = partido;
+        this.cargo = cargo;
     }
 
     public int getNumero() {
@@ -27,19 +27,19 @@ public class Candidato {
         this.nome = nome;
     }
 
-    public Cargo getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
-    }
-
     public Partido getPartido() {
         return partido;
     }
 
     public void setPartido(Partido partido) {
         this.partido = partido;
+    }
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
 }

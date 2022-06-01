@@ -1,5 +1,5 @@
 public class Cargo {
-    private  int idCargo;
+    private int idCargo;
     private String cargo;
 
     public Cargo(int idCargo, String cargo) {
@@ -22,4 +22,5 @@ public class Cargo {
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
+
 }
