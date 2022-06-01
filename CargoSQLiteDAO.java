@@ -1,8 +1,6 @@
+import java.sql.*;
 import java.util.List;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 public class CargoSQLiteDAO implements CargoDAO {
 
     @Override
@@ -35,7 +33,23 @@ public class CargoSQLiteDAO implements CargoDAO {
 
     @Override
     public Cargo buscar(int numero) {
-        return null;
+        PreparedStatement stmt = null;
+        Connection conn = null;
+        Cargo Ca = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:sqlite:aula1.db");
+            String sql = "SELECT * FROM Candidato WHERE numero=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,numero);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+                Ca = new Cargo(rs.getInt("idCargo"), rs.getString("nome"));
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Ca;
     }
 
     @Override

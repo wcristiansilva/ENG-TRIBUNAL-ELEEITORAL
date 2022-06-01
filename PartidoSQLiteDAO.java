@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class PartidoSQLiteDAO implements PartidoDAO {
@@ -36,7 +33,23 @@ public class PartidoSQLiteDAO implements PartidoDAO {
 
     @Override
     public Partido buscar(int numero) {
-        return null;
+        PreparedStatement stmt = null;
+        Connection conn = null;
+        Partido P = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:sqlite:aula1.db");
+            String sql = "SELECT * FROM Partido WHERE numero=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,numero);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+                P = new Partido(rs.getInt("numero"), rs.getString("nome"), rs.getString("sigla"));
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return P;
     }
 
     @Override

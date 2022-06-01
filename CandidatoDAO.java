@@ -4,6 +4,6 @@ public interface CandidatoDAO {
     void salvar(Candidato C);
     void atualizar(Candidato C);
     void excluir(Candidato C);
-    Candidato buscar(int numero);
+    Candidato buscar(String nome);
     List<Candidato> listar();
 }
