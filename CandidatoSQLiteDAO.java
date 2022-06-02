@@ -47,7 +47,7 @@ public class CandidatoSQLiteDAO implements CandidatoDAO {
         Connection conn = null;
         try{
             conn = DriverManager.getConnection("jdbc:sqlite:aula1.db");
-            String sql = "DELETE FROM Candidato WHERE idCurso=?";
+            String sql = "DELETE FROM Candidato WHERE numero=?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1,C.getNumero());
             stmt.executeUpdate();
