@@ -6,17 +6,13 @@ public class CandidatoSQLiteDAO implements CandidatoDAO {
 
     @Override
     public void salvar(Candidato C) {
-        PreparedStatement stmt = null;
-        Connection conn = null;
-        try{
-            conn = DriverManager.getConnection("jdbc:sqlite:aula1.db");
-            String sql = "INSERT INTO Candidato values (?,?)";
-            stmt = conn.prepareStatement(sql);
+        String sql = "INSERT INTO Candidato values (?,?,?,?)";
+        try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             stmt.setInt(1,C.getNumero());
             stmt.setString(2,C.getNome());
+            stmt.setInt(3,C.getPartido().getNumero());
+            stmt.setInt(4,C.getCargo().getIdCargo());
             stmt.executeUpdate();
-            stmt.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -24,17 +20,11 @@ public class CandidatoSQLiteDAO implements CandidatoDAO {
 
     @Override
     public void atualizar(Candidato C) {
-        PreparedStatement stmt = null;
-        Connection conn = null;
-        try{
-            conn = DriverManager.getConnection("jdbc:sqlite:aula1.db");
-            String sql = "UPDATE Candidato SET nome=? WHERE idCurso=?";
-            stmt = conn.prepareStatement(sql);
+        String sql = "UPDATE Candidato SET nome=? WHERE numero=?";
+        try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             stmt.setString(1,C.getNome());
             stmt.setInt(2,C.getNumero());
             stmt.executeUpdate();
-            stmt.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,16 +33,10 @@ public class CandidatoSQLiteDAO implements CandidatoDAO {
 
     @Override
     public void excluir(Candidato C) {
-        PreparedStatement stmt = null;
-        Connection conn = null;
-        try{
-            conn = DriverManager.getConnection("jdbc:sqlite:aula1.db");
-            String sql = "DELETE FROM Candidato WHERE numero=?";
-            stmt = conn.prepareStatement(sql);
+        String sql = "DELETE FROM Candidato WHERE numero=?";
+        try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             stmt.setInt(1,C.getNumero());
             stmt.executeUpdate();
-            stmt.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -60,13 +44,9 @@ public class CandidatoSQLiteDAO implements CandidatoDAO {
 
     @Override
     public Candidato buscar(String nome) {
-        PreparedStatement stmt = null;
-        Connection conn = null;
+        String sql = "SELECT * FROM Candidato WHERE nome=?";
         Candidato C=null;
-        try{
-            conn = DriverManager.getConnection("jdbc:sqlite:aula1.db");
-            String sql = "SELECT * FROM candidato WHERE nome=?";
-            stmt = conn.prepareStatement(sql);
+        try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             stmt.setString(1,nome);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -76,8 +56,6 @@ public class CandidatoSQLiteDAO implements CandidatoDAO {
                         rs.getString("nome"),
                         partido,cargo);
             }
-            stmt.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -86,13 +64,9 @@ public class CandidatoSQLiteDAO implements CandidatoDAO {
 
     @Override
     public List<Candidato> listar() {
-        PreparedStatement stmt = null;
-        Connection conn = null;
+        String sql = "SELECT * FROM Candidato";
         List<Candidato> listaCandidatos =new ArrayList<>();
-        try{
-            conn = DriverManager.getConnection("jdbc:sqlite:aula1.db");
-            String sql = "SELECT * FROM candidato";
-            stmt = conn.prepareStatement(sql);
+        try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Partido partido = new PartidoSQLiteDAO().buscar(rs.getInt("partido"));
@@ -102,8 +76,6 @@ public class CandidatoSQLiteDAO implements CandidatoDAO {
                         partido,cargo);
                 listaCandidatos.add(C);
             }
-            stmt.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
