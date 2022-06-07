@@ -6,7 +6,7 @@ public class PartidoSQLiteDAO implements PartidoDAO {
 
     @Override
     public void salvar(Partido P) {
-        String sql = "INSERT INTO Partido values (?,?)";
+        String sql = "INSERT INTO Partido values (?,?,?)";
         try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             stmt.setInt(1,P.getNumero());
             stmt.setString(2,P.getNome());

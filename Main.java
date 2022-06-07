@@ -26,5 +26,6 @@ public class Main {
         candidatoDAO.salvar(candidato);
 
         candidato = new Candidato(8, "José", new Partido(8, "Partido 8", "P8"), new Cargo(8, "Cargo 8"));
+        candidatoDAO.salvar(candidato);
     }
 }

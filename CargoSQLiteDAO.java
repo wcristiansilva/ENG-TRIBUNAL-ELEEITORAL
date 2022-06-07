@@ -6,7 +6,7 @@ public class CargoSQLiteDAO implements CargoDAO {
 
     @Override
     public void salvar(Cargo Ca) {
-        String sql = "INSERT INTO Cargo values (?,?)";
+        String sql = "INSERT INTO cargo values (?,?)";
 
         try(PreparedStatement stmt=ConnectionFactory.criaStatement(sql)) {
             stmt.setInt(1, Ca.getIdCargo());
@@ -33,7 +33,7 @@ public class CargoSQLiteDAO implements CargoDAO {
     @Override
     public void excluir(Cargo Ca) {
 
-        String sql = "DELETE FROM Cargo WHERE idCargo=?";
+        String sql = "DELETE FROM cargo WHERE idCargo=?";
         try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             stmt.setInt(1,Ca.getIdCargo());
             stmt.executeUpdate();
@@ -45,7 +45,7 @@ public class CargoSQLiteDAO implements CargoDAO {
     @Override
     public Cargo buscar(int numero) {
 
-        String sql = "SELECT * FROM Cargo WHERE numero=?";
+        String sql = "SELECT * FROM cargo WHERE numero=?";
         Cargo Ca = null;
         try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             stmt.setInt(1,numero);
@@ -60,7 +60,7 @@ public class CargoSQLiteDAO implements CargoDAO {
 
     @Override
     public List<Cargo> listar() {
-        String sql = "SELECT * FROM Cargo";
+        String sql = "SELECT * FROM cargo";
         List<Cargo> listacargos =new ArrayList<>();
         try{PreparedStatement stmt = ConnectionFactory.criaStatement(sql);
             ResultSet rs = stmt.executeQuery();
